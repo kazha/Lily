@@ -1,0 +1,31 @@
+<p *ngIf="!employees"><em>Loading...</em></p>
+
+<div *ngIf="employees">
+  <label>Filter:</label> <input type="text" class="form-control" (input)="filter($event.target.value)" />
+</div>
+<table *ngIf="employees" class='table table-striped' aria-labelledby="tableLabel" matSort (matSortChange)="sortData($event)" matSortActive="firstName" matSortDirection="asc" matSortDisableClear>
+  <thead>
+    <tr>
+      <th>Picture</th>
+      <th mat-sort-header="firstName">First name</th>
+      <th>Last name</th>
+      <th>Nationality</th>
+      <th>Date of birth</th>
+      <th>Country</th>
+      <th>Distance from riga</th>
+      <th>Age group</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let employee of sortedData" [ngClass]="employee.age | ageGroupColor">
+      <td><img src="{{ employee.pictureUrl }}" /></td>
+      <td>{{ employee.firstName }}</td>
+      <td>{{ employee.lastName }}</td>
+      <td>{{ employee.nationality }}</td>
+      <td>{{ employee.dateOfBirth | date: "dd/MM/yyyy" }}</td>
+      <td>{{ employee.country }}</td>
+      <td>{{ employee.distanceFromRiga }}</td>
+      <td>{{ employee.age | ageGroup }}</td>
+    </tr>
+  </tbody>
+</table>
